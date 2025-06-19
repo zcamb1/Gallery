@@ -58,6 +58,7 @@ class SettingsActivity : SimpleActivity() {
         setupManageIncludedFolders()
         setupManageExcludedFolders()
         setupManageHiddenFolders()
+        setupSecureHiddenFiles()
         setupSearchAllFiles()
         setupShowHiddenItems()
         setupAutoplayVideos()
@@ -72,6 +73,7 @@ class SettingsActivity : SimpleActivity() {
         setupScreenRotation()
         setupHideSystemUI()
         setupHiddenItemPasswordProtection()
+        setupSecureHideFolder()
         setupExcludedItemPasswordProtection()
         setupAppPasswordProtection()
         setupFileDeletionPasswordProtection()
@@ -229,6 +231,47 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
+    private fun setupSecureHiddenFiles() {
+        updateSecureHiddenFilesVisibility()
+        
+        binding.settingsManageSecureHiddenFilesHolder.setOnClickListener {
+            if (config.secureHideFolderEnabled && config.isHiddenPasswordProtectionOn) {
+                Intent(this, SecureHiddenFilesActivity::class.java).apply {
+                    startActivity(this)
+                }
+            } else {
+                val message = if (!config.isHiddenPasswordProtectionOn) {
+                    getString(R.string.secure_folder_requires_password)
+                } else {
+                    "Secure folder is not enabled"
+                }
+                toast(message)
+            }
+        }
+    }
+    
+    private fun updateSecureHiddenFilesVisibility() {
+        val isEnabled = config.secureHideFolderEnabled && config.isHiddenPasswordProtectionOn
+        
+        // Always show the option but with different styling
+        binding.settingsManageSecureHiddenFilesHolder.beVisible()
+        
+        if (!isEnabled) {
+            // Update text to show what's needed
+            val statusText = when {
+                !config.isHiddenPasswordProtectionOn -> "Enable password protection first"
+                !config.secureHideFolderEnabled -> "Enable secure folder first"
+                else -> "Requirements not met"
+            }
+            binding.settingsManageSecureHiddenFiles.text = 
+                "${getString(R.string.manage_secure_hidden_files)} ($statusText)"
+            binding.settingsManageSecureHiddenFilesHolder.alpha = 0.5f
+        } else {
+            binding.settingsManageSecureHiddenFiles.text = getString(R.string.manage_secure_hidden_files)
+            binding.settingsManageSecureHiddenFilesHolder.alpha = 1.0f
+        }
+    }
+
     private fun setupShowHiddenItems() {
         if (isRPlus() && !isExternalStorageManager()) {
             binding.settingsShowHiddenItems.text =
@@ -367,8 +410,50 @@ class SettingsActivity : SimpleActivity() {
                             org.fossify.commons.R.string.fingerprint_setup_successfully else org.fossify.commons.R.string.protection_setup_successfully
                         ConfirmationDialog(this, "", confirmationTextId, org.fossify.commons.R.string.ok, 0) { }
                     }
+                    
+                    // Update secure folder setting text
+                    updateSecureHideFolderText()
+                    // Update secure hidden files visibility
+                    updateSecureHiddenFilesVisibility()
                 }
             }
+        }
+    }
+
+    private fun setupSecureHideFolder() {
+        binding.settingsSecureHideFolder.isChecked = config.secureHideFolderEnabled
+        updateSecureHideFolderText()
+        
+        binding.settingsSecureHideFolderHolder.setOnClickListener {
+            if (config.isHiddenPasswordProtectionOn) {
+                binding.settingsSecureHideFolder.toggle()
+                config.secureHideFolderEnabled = binding.settingsSecureHideFolder.isChecked
+                
+                if (config.secureHideFolderEnabled) {
+                    // Setup secure folder on first enable
+                    SecureHideManager(this).setupSecureFolder()
+                    toast(R.string.secure_hide_folder)
+                }
+                // Update secure hidden files visibility when secure folder changes
+                updateSecureHiddenFilesVisibility()
+            } else {
+                // Prompt to setup password first
+                ConfirmationDialog(this, "", R.string.setup_password_first, org.fossify.commons.R.string.ok, 0) {
+                    // Focus on password protection setting
+                    binding.settingsHiddenItemPasswordProtectionHolder.performClick()
+                }
+            }
+        }
+    }
+
+    private fun updateSecureHideFolderText() {
+        if (config.isHiddenPasswordProtectionOn) {
+            binding.settingsSecureHideFolder.setText(R.string.secure_hide_folder)
+            binding.settingsSecureHideFolderHolder.alpha = 1.0f
+        } else {
+            binding.settingsSecureHideFolder.text = 
+                "${getString(R.string.secure_hide_folder)} (${getString(R.string.setup_password_first)})"
+            binding.settingsSecureHideFolderHolder.alpha = 0.6f
         }
     }
 

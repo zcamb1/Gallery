@@ -268,3 +268,11 @@ fun getPermissionsToRequest(): Collection<Int> {
 
     return permissions
 }
+
+// secure hide folder constants
+const val SECURE_HIDE_FOLDER_ENABLED = "secure_hide_folder_enabled"
+const val SECURE_HIDE_FOLDER_PATH = "secure_hide_folder_path"
+
+// hide mode constants
+const val HIDE_MODE_NORMAL = 1
+const val HIDE_MODE_SECURE = 2

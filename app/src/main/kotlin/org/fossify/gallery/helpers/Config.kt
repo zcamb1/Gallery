@@ -237,6 +237,18 @@ class Config(context: Context) : BaseConfig(context) {
         get() = prefs.getBoolean(ALLOW_INSTANT_CHANGE, false)
         set(allowInstantChange) = prefs.edit().putBoolean(ALLOW_INSTANT_CHANGE, allowInstantChange).apply()
 
+    var secureHideFolderEnabled: Boolean
+        get() = prefs.getBoolean(SECURE_HIDE_FOLDER_ENABLED, false)
+        set(enabled) = prefs.edit().putBoolean(SECURE_HIDE_FOLDER_ENABLED, enabled).apply()
+
+    var secureHideFolderPath: String
+        get() = prefs.getString(SECURE_HIDE_FOLDER_PATH, getDefaultSecurePath())!!
+        set(path) = prefs.edit().putString(SECURE_HIDE_FOLDER_PATH, path).apply()
+
+    private fun getDefaultSecurePath(): String {
+        return "${context.getExternalFilesDir(null)}/secure"
+    }
+
     private fun getDirectoryColumnsField(): String {
         val isPortrait = context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
         return if (isPortrait) {

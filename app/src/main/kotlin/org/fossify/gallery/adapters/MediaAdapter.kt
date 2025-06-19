@@ -75,6 +75,11 @@ import org.fossify.gallery.extensions.shareMediumPath
 import org.fossify.gallery.extensions.showRestoreConfirmationDialog
 import org.fossify.gallery.extensions.toggleFileVisibility
 import org.fossify.gallery.extensions.tryCopyMoveFilesTo
+import org.fossify.gallery.dialogs.HideModeDialog
+import org.fossify.gallery.helpers.HIDE_MODE_NORMAL
+import org.fossify.gallery.helpers.HIDE_MODE_SECURE
+import org.fossify.gallery.helpers.SecureHideManager
+import org.fossify.commons.extensions.handleHiddenFolderPasswordProtection
 import org.fossify.gallery.extensions.updateDBMediaPath
 import org.fossify.gallery.extensions.updateFavorite
 import org.fossify.gallery.extensions.updateFavoritePaths
@@ -92,6 +97,7 @@ import org.fossify.gallery.interfaces.MediaOperationsListener
 import org.fossify.gallery.models.Medium
 import org.fossify.gallery.models.ThumbnailItem
 import org.fossify.gallery.models.ThumbnailSection
+import android.util.Log
 
 class MediaAdapter(
     activity: BaseSimpleActivity,
@@ -364,13 +370,94 @@ class MediaAdapter(
     }
 
     private fun toggleFileVisibility(hide: Boolean) {
-        ensureBackgroundThread {
-            getSelectedItems().forEach {
-                activity.toggleFileVisibility(it.path, hide)
+        if (!hide) {
+            // Unhide - use existing behavior
+            ensureBackgroundThread {
+                getSelectedItems().forEach {
+                    activity.toggleFileVisibility(it.path, hide)
+                }
+                activity.runOnUiThread {
+                    listener?.refreshItems()
+                    finishActMode()
+                }
             }
-            activity.runOnUiThread {
-                listener?.refreshItems()
-                finishActMode()
+            return
+        }
+
+        // Hide with dual mode options
+        if (config.isHiddenPasswordProtectionOn && config.secureHideFolderEnabled) {
+            // Show choice dialog
+            HideModeDialog(activity) { hideMode ->
+                when (hideMode) {
+                    HIDE_MODE_NORMAL -> {
+                        // Use existing hide method
+                        ensureBackgroundThread {
+                            getSelectedItems().forEach {
+                                activity.toggleFileVisibility(it.path, true)
+                            }
+                            activity.runOnUiThread {
+                                listener?.refreshItems()
+                                finishActMode()
+                            }
+                        }
+                    }
+                    HIDE_MODE_SECURE -> {
+                        // Use secure hide method
+                        hideInSecureFolder()
+                    }
+                }
+            }
+        } else {
+            // Use existing hide method if secure folder not enabled
+            ensureBackgroundThread {
+                getSelectedItems().forEach {
+                    activity.toggleFileVisibility(it.path, hide)
+                }
+                activity.runOnUiThread {
+                    listener?.refreshItems()
+                    finishActMode()
+                }
+            }
+        }
+    }
+
+    private fun hideInSecureFolder() {
+        val selectedPaths = getSelectedPaths()
+        Log.d("MediaAdapter", "Starting secure hide for ${selectedPaths.size} files")
+        
+        val secureHideManager = SecureHideManager(activity)
+        
+        activity.handleHiddenFolderPasswordProtection {
+            ensureBackgroundThread {
+                var processedCount = 0
+                var successCount = 0
+                
+                selectedPaths.forEach { path ->
+                    Log.d("MediaAdapter", "Processing file: $path")
+                    secureHideManager.hideFileInSecureFolder(path) { success ->
+                        processedCount++
+                        if (success) {
+                            successCount++
+                            Log.d("MediaAdapter", "Successfully hid file: $path")
+                        } else {
+                            Log.e("MediaAdapter", "Failed to hide file: $path")
+                        }
+                        
+                        if (processedCount == selectedPaths.size) {
+                            Log.d("MediaAdapter", "Finished processing. Success: $successCount/${selectedPaths.size}")
+                            activity.runOnUiThread {
+                                val message = if (successCount == selectedPaths.size) {
+                                    "Files hidden successfully"
+                                } else {
+                                    "${successCount}/${selectedPaths.size} files moved to secure folder"
+                                }
+                                activity.toast(message)
+                                listener?.refreshItems()
+                                finishActMode()
+                            }
+                        }
+                    }
+                }
             }
         }
     }

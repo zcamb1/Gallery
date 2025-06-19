@@ -504,6 +504,7 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                 R.id.temporarily_show_excluded -> tryToggleTemporarilyShowExcluded()
                 R.id.stop_showing_excluded -> tryToggleTemporarilyShowExcluded()
                 R.id.create_new_folder -> createNewFolder()
+                R.id.manage_secure_hidden_files -> openSecureHiddenFiles()
                 R.id.open_recycle_bin -> openRecycleBin()
                 R.id.column_count -> changeColumnCount()
                 R.id.set_as_default_folder -> setAsDefaultFolder()
@@ -908,6 +909,21 @@ class MainActivity : SimpleActivity(), DirectoryOperationsListener {
                     gotDirectories(addTempFolderIfNeeded(getCurrentlyDisplayedDirs()))
                 }
             }
+        }
+    }
+
+    private fun openSecureHiddenFiles() {
+        if (config.secureHideFolderEnabled && config.isHiddenPasswordProtectionOn) {
+            Intent(this, SecureHiddenFilesActivity::class.java).apply {
+                startActivity(this)
+            }
+        } else {
+            val message = if (!config.isHiddenPasswordProtectionOn) {
+                getString(R.string.secure_folder_requires_password)
+            } else {
+                "Secure folder is not enabled. Enable it in Settings first."
+            }
+            toast(message)
         }
     }
 

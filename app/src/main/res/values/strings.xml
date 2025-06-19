@@ -52,12 +52,22 @@
 
     <!-- Hide / Exclude -->
     <string name="hide_folder_description">This function hides the folder by adding a \'.nomedia\' file into it, it will hide all subfolders too. You can see them by toggling the \'Show hidden items\' option in Settings. Continue?</string>
-    <string name="exclude_folder_description">This will exclude the selection together with its subfolders from Fossify Gallery only. You can manage excluded folders in Settings.</string>
+    <string name="exclude_folder_description">This will exclude the selection together with its subfolders from Simple Gallery only. You can see them by toggling the \'Show excluded folders\' option in Settings.</string>
     <string name="exclude_folder_parent">Exclude a parent instead?</string>
     <string name="excluded_activity_placeholder">Excluding folders will make them together with their subfolders hidden just in Fossify Gallery, they will still be visible in other applications.\n\nIf you want to hide them from other apps too, use the Hide function.</string>
+    <string name="include_folder_description">This will include the selection together with its subfolders in Simple Gallery only. You can always remove excluded folders at Settings.</string>
+    <string name="temporary_show_excluded">Temporarily show excluded</string>
+    <string name="stop_showing_excluded">Stop showing excluded</string>
+    <string name="hide_normally">Hide normally</string>
+    <string name="hide_in_secure_folder">Hide in secure folder</string>
+    <string name="secure_hide_folder">Secure hide folder</string>
+    <string name="secure_hidden_files">Secure hidden files</string>
+    <string name="secure_hidden_files_placeholder">No files in secure folder.</string>
+    <string name="setup_password_first">Please setup password protection first</string>
+    <string name="choose_hide_method">Choose hide method</string>
     <string name="hidden_folders">Hidden folders</string>
     <string name="manage_hidden_folders">Manage hidden folders</string>
-    <string name="hidden_folders_placeholder">Seems like you don\'t have any folders hidden with a \".nomedia\" file.</string>
+    <string name="hidden_folders_placeholder">You don\'t seem to have any folders hidden with a \".nomedia\" file.</string>
     <string name="hidden_all_files">You have to grant the app All Files access to see hidden files, else it cannot work.</string>
     <string name="cant_unhide_folder">If a folder or one of its parent folders has a dot before its name, it is hidden and cannot be unhidden like this. You have to remove the dot by renaming it.</string>
 
@@ -290,6 +300,11 @@
     <string name="faq_17_text">That stopped working due to the system changes that came with Android 11 too, the app cannot browse real folders anymore, it relies on the so called MediaStore at fetching data.</string>
     <string name="faq_18_title">Why do I see ads during video playback?</string>
     <string name="faq_18_text">Our apps have no ads whatsoever. If you see them during video playback, you must be using some other apps video player. Try finding your default video player in the device settings, then do a \"Clear defaults\" on it. The next time you invoke some video intent you will see an app picker prompt, where you can select what app you want to use.</string>
+    <!-- Secure Hidden Files -->
+    <string name="file_restored_successfully">File restored successfully</string>
+    <string name="manage_secure_hidden_files">Manage secure hidden files</string>
+    <string name="secure_folder_requires_password">Secure folder requires password protection to be enabled first</string>
+
     <!--
         Haven't found some strings? There's more at
         https://github.com/FossifyOrg/Commons/tree/master/commons/src/main/res

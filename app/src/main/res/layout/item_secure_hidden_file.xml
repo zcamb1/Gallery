@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/secure_hidden_file_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:minHeight="@dimen/min_radio_checkbox_height"
+    android:paddingStart="@dimen/bigger_margin"
+    android:paddingTop="@dimen/small_margin"
+    android:paddingEnd="@dimen/bigger_margin"
+    android:paddingBottom="@dimen/small_margin">
+
+    <ImageView
+        android:id="@+id/secure_hidden_file_thumbnail"
+        android:layout_width="@dimen/list_avatar_size"
+        android:layout_height="@dimen/list_avatar_size"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_files_vector"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/medium_margin"
+        android:layout_toStartOf="@+id/secure_hidden_file_restore"
+        android:layout_toEndOf="@+id/secure_hidden_file_thumbnail"
+        android:orientation="vertical">
+
+        <org.fossify.commons.views.MyTextView
+            android:id="@+id/secure_hidden_file_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/bigger_text_size"
+            tools:text="IMG_001.jpg" />
+
+        <org.fossify.commons.views.MyTextView
+            android:id="@+id/secure_hidden_file_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/smaller_text_size"
+            tools:text="Original: /storage/DCIM/Camera/" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/secure_hidden_file_restore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/small_margin"
+        android:src="@drawable/ic_rotate_right_vector"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout> 
