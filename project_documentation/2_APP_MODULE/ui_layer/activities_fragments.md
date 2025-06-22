@@ -71,22 +71,20 @@ sequenceDiagram
     participant DirectoryAdapter
     participant Database
     
-    MainActivity->>MainActivity: "onCreate()"
-    MainActivity->>MainActivity: "setupLayoutManager()"
-    MainActivity->>MainActivity: "handlePermission()"
+    MainActivity->>MainActivity: onCreate()
+    MainActivity->>MainActivity: setupLayoutManager()
+    MainActivity->>MainActivity: handlePermission()
     
-    subgraph "Key Methods"
-        MainActivity->>MainActivity: "getDirectories() - Load folders"
-        MainActivity->>MainActivity: "handlePermission() - Storage access"
-        MainActivity->>MainActivity: "setupAdapter() - RecyclerView setup"
-        MainActivity->>MainActivity: "updateDirectories() - Refresh data"
-    end
+    Note over MainActivity: Key Methods
+    MainActivity->>MainActivity: getDirectories() - Load folders
+    MainActivity->>MainActivity: handlePermission() - Storage access
+    MainActivity->>MainActivity: setupAdapter() - RecyclerView setup
+    MainActivity->>MainActivity: updateDirectories() - Refresh data
     
-    subgraph "Navigation"
-        MainActivity->>MediaActivity: "openPath() - Folder tap"
-        MainActivity->>SettingsActivity: "Settings menu"
-        MainActivity->>ViewPagerActivity: "Media tap (direct)"
-    end
+    Note over MainActivity: Navigation
+    MainActivity->>MediaActivity: openPath() - Folder tap
+    MainActivity->>SettingsActivity: Settings menu
+    MainActivity->>ViewPagerActivity: Media tap (direct)
 ```
 
 **Key Responsibilities**:
@@ -110,14 +108,14 @@ sequenceDiagram
     participant MediaActivity
     participant ViewPagerActivity
     
-    User->>MainActivity: "Tap folder"
-    MainActivity->>MediaActivity: "Intent + folder path"
-    MediaActivity->>MediaActivity: "getMedia()"
-    MediaActivity->>MediaActivity: "setupAdapter()"
-    MediaActivity-->>User: "Show media grid"
+    User->>MainActivity: Tap folder
+    MainActivity->>MediaActivity: Intent + folder path
+    MediaActivity->>MediaActivity: getMedia()
+    MediaActivity->>MediaActivity: setupAdapter()
+    MediaActivity-->>User: Show media grid
     
-    User->>MediaActivity: "Tap media item"
-    MediaActivity->>ViewPagerActivity: "Navigate to fullscreen"
+    User->>MediaActivity: Tap media item
+    MediaActivity->>ViewPagerActivity: Navigate to fullscreen
 ```
 
 **Key Responsibilities**:
