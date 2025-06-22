@@ -115,16 +115,8 @@ graph TD
 ## 🎯 Learning Paths
 
 ### 🌱 **Beginners**
-```mermaid
-graph TD
-    A[1. Setup Guide] --> B[2. App Architecture]
-    B --> C[3. Main User Flows]
-    C --> D[4. Activities & Fragments]
-    D --> E[5. Data Sources]
-    E --> F[6. Start Contributing!]
-```
 
-**Recommended reading order for new Android developers:**
+**Recommended learning path for new Android developers:**
 
 1. [Setup Guide](5_SYSTEM_INFO/setup_guide.md) - Environment setup
 2. [App Architecture](1_OVERVIEW/app_architecture.md) - System overview
