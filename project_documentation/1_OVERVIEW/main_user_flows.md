@@ -118,7 +118,7 @@ graph TD
     D --> G[Crop/Rotate]
     D --> H[Draw/Text]
     
-    E --> I[Apply filter preset"]
+    E --> I[Apply filter preset]
     F --> J[Brightness, Contrast, Saturation]
     G --> K[Crop to aspect ratio]
     H --> L[Add drawings/annotations]
