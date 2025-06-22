@@ -14,22 +14,22 @@ Complete documentation for the **Fossify Gallery** project - a leading open-sour
 
 ### 🚀 About Fossify Gallery
 ```mermaid
-graph TB
-    subgraph "Core Features"
+graph TD
+    subgraph CF["Core Features"]
         A[Photo & Video Viewing]
         B[File Management]
         C[Editing Tools]
         D[Privacy & Security]
     end
     
-    subgraph "Technical Stack"
+    subgraph TS["Technical Stack"]
         E[100% Kotlin]
         F[Room Database]
         G[MediaStore API]
         H[Material Design]
     end
     
-    subgraph "Architecture"
+    subgraph AR["Architecture"]
         I[Activity-based Architecture]
         J[Manual Dependency Injection]
         K[Background Processing]
@@ -117,14 +117,15 @@ graph TB
 ### 🌱 **Beginners**
 ```mermaid
 graph TD
-    A["1. Setup Guide"] --> B["2. App Architecture"]
-    B --> C["3. Main User Flows"]
-    C --> D["4. Activities & Fragments"]
-    D --> E["5. Data Sources"]
-    E --> F["6. Start Contributing!"]
+    A[1. Setup Guide] --> B[2. App Architecture]
+    B --> C[3. Main User Flows]
+    C --> D[4. Activities & Fragments]
+    D --> E[5. Data Sources]
+    E --> F[6. Start Contributing!]
 ```
 
 **Recommended reading order for new Android developers:**
+
 1. [Setup Guide](5_SYSTEM_INFO/setup_guide.md) - Environment setup
 2. [App Architecture](1_OVERVIEW/app_architecture.md) - System overview
 3. [Main User Flows](1_OVERVIEW/main_user_flows.md) - User experience
@@ -134,10 +135,10 @@ graph TD
 ### 📱 **Android Developers**
 ```mermaid
 graph TD
-    A["App Architecture"] --> B["Activity Pattern"]
-    B --> C["Data Layer"]
-    C --> D["DI Setup"]
-    D --> E["Core Concepts"]
+    A[App Architecture] --> B[Activity Pattern]
+    B --> C[Data Layer]
+    C --> D[DI Setup]
+    D --> E[Core Concepts]
 ```
 
 **For developers with Android experience:**
@@ -149,11 +150,11 @@ graph TD
 ### 🚀 **Senior/Lead Developers**
 ```mermaid
 graph TD
-    A["Overall Architecture"] --> B["Data Layer Analysis"]
-    B --> C["DI & Testing Strategy"]
-    C --> D["Build & Test Strategy"]
-    D --> E["Technical Guides"]
-    E --> F["Performance Optimization"]
+    A[Overall Architecture] --> B[Data Layer Analysis]
+    B --> C[DI & Testing Strategy]
+    C --> D[Build & Test Strategy]
+    D --> E[Technical Guides]
+    E --> F[Performance Optimization]
 ```
 
 **For architecture and technical decisions:**
@@ -223,13 +224,13 @@ git push origin feature/docs-update
 ### 🔄 **Keeping Docs Updated**
 ```mermaid
 graph TD
-    A["Code Change"] --> B{Affects Architecture?}
-    B -->|Yes| C["Update Architecture Docs"]
-    B -->|No| D["Update Code Examples"]
-    C --> E["Review Related Diagrams"]
+    A[Code Change] --> B{Affects Architecture?}
+    B -->|Yes| C[Update Architecture Docs]
+    B -->|No| D[Update Code Examples]
+    C --> E[Review Related Diagrams]
     D --> E
-    E --> F["Test Documentation Build"]
-    F --> G["Create Pull Request"]
+    E --> F[Test Documentation Build]
+    F --> G[Create Pull Request]
 ```
 
 ## 📞 Contact & Support
